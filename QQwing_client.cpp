@@ -26,32 +26,56 @@
 #include "qqwing.hpp"
 #include "QQwing_client.hpp"
 
-void printSimplePuzzle ()
-{
-    SudokuBoard::PrintStyle printStyle = SudokuBoard::ONE_LINE;
-    int numberToGenerate = 10;
+QQwingWrapper::QQwingWrapper(){
+    board = new SudokuBoard();
+    board->setRecordHistory(true);
+    board->setLogHistory(false);
+    board->setPrintStyle(SudokuBoard::ONE_LINE);
+}
+
+void QQwingWrapper::generatePuzzle (SudokuBoard::Difficulty difficulty){
     bool havePuzzle = false;
-    SudokuBoard::Difficulty difficulty = SudokuBoard::SIMPLE;
+    bool done = false;
     SudokuBoard::Symmetry symmetry = SudokuBoard::RANDOM;
 
-    SudokuBoard* ss = new SudokuBoard();
-    ss->setRecordHistory(difficulty!=SudokuBoard::UNKNOWN);
-    ss->setLogHistory(false);
-    ss->setPrintStyle(printStyle);
-
-    while (numberToGenerate != 0)
+    while (!done)
     {
-        havePuzzle = ss->generatePuzzleSymmetry (symmetry);
+        havePuzzle = board->generatePuzzleSymmetry (symmetry);
 
-        ss->solve ();
-        if (!havePuzzle || difficulty != ss->getDifficulty())
+        board->solve ();
+        if (!havePuzzle || difficulty != board->getDifficulty())
             continue;
 
-        ss->printPuzzle ();
-        numberToGenerate--;
+        board->printPuzzle ();
+        done = true;
     }
+}
 
-    std::cout << "\nPuzzles generation complete\n";
-    delete ss;
+void QQwingWrapper::printStats(){
+    int givenCount = board->getGivenCount();
+    int singleCount = board->getSingleCount();
+    int hiddenSingleCount = board->getHiddenSingleCount();
+    int nakedPairCount = board->getNakedPairCount();
+    int hiddenPairCount = board->getHiddenPairCount();
+    int pointingPairTripleCount = board->getPointingPairTripleCount();
+    int boxReductionCount = board->getBoxLineReductionCount();
+    int guessCount = board->getGuessCount();
+    int backtrackCount = board->getBacktrackCount();
+    string difficultyString = board->getDifficultyAsString();
+
+    cout << "Number of Givens: " << givenCount  << endl;
+    cout << "Number of Singles: " << singleCount << endl;
+    cout << "Number of Hidden Singles: " << hiddenSingleCount  << endl;
+    cout << "Number of Naked Pairs: " << nakedPairCount  << endl;
+    cout << "Number of Hidden Pairs: " << hiddenPairCount  << endl;
+    cout << "Number of Pointing Pairs/Triples: " << pointingPairTripleCount  << endl;
+    cout << "Number of Box/Line Intersections: " << boxReductionCount  << endl;
+    cout << "Number of Guesses: " << guessCount  << endl;
+    cout << "Number of Backtracks: " << backtrackCount  << endl;
+    cout << "Difficulty: " << difficultyString  << endl;
+}
+
+void QQwingWrapper::destroy(){
+    delete board;
 }
 

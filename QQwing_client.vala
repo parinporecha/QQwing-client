@@ -21,9 +21,23 @@
  *
  */
 
-extern void printSimplePuzzle ();
 
 public void main() {
     stdout.printf ("Testing qqwing, generating 10 puzzles ...\n\n");
-    printSimplePuzzle ();
+
+    int number_to_generate = 10;
+
+    // 1 corresponds to SIMPLE difficulty
+    // 2 corresponds to EASY difficulty
+    // 3 corresponds to INTERMEDIATE difficulty
+    // 4 corresponds to EXPERT difficulty
+    int difficulty = 1;
+
+    var wrapper = new QQwingWrapper ();
+
+    for (var i = 0; i < number_to_generate; i++)
+    {
+        wrapper.generatePuzzle (1);
+        wrapper.printStats ();
+    }
 }
