@@ -24,7 +24,7 @@
 #include <iostream>
 
 #include "qqwing.hpp"
-#include "QQwing_client.hpp"
+#include "QQwing_wrapper.hpp"
 
 QQwingWrapper::QQwingWrapper(){
     board = new SudokuBoard();
