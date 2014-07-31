@@ -1,4 +1,4 @@
-[CCode (cheader_filename = "QQwing_client.hpp")]
+[CCode (cheader_filename = "QQwing_wrapper.hpp")]
 public class QQwingWrapper {
     public QQwingWrapper();
     public void generatePuzzle (int difficulty);
