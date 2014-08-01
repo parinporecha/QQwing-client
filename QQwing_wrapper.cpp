@@ -24,16 +24,18 @@
 #include <iostream>
 
 #include "qqwing.hpp"
-#include "QQwing_wrapper.hpp"
+#include "QQwing_wrapper.h"
 
-QQwingWrapper::QQwingWrapper(){
+using namespace qqwing;
+
+SudokuBoard *board;
+
+void qqwing_wrapper_generate_puzzle (int difficulty)
+{
     board = new SudokuBoard();
     board->setRecordHistory(true);
     board->setLogHistory(false);
     board->setPrintStyle(SudokuBoard::ONE_LINE);
-}
-
-void QQwingWrapper::generatePuzzle (SudokuBoard::Difficulty difficulty){
     bool havePuzzle = false;
     bool done = false;
     SudokuBoard::Symmetry symmetry = SudokuBoard::RANDOM;
@@ -43,7 +45,7 @@ void QQwingWrapper::generatePuzzle (SudokuBoard::Difficulty difficulty){
         havePuzzle = board->generatePuzzleSymmetry (symmetry);
 
         board->solve ();
-        if (!havePuzzle || difficulty != board->getDifficulty())
+        if (!havePuzzle || (SudokuBoard::Difficulty) difficulty != board->getDifficulty())
             continue;
 
         board->printPuzzle ();
@@ -51,7 +53,7 @@ void QQwingWrapper::generatePuzzle (SudokuBoard::Difficulty difficulty){
     }
 }
 
-void QQwingWrapper::printStats(){
+void qqwing_wrapper_print_stats(){
     int givenCount = board->getGivenCount();
     int singleCount = board->getSingleCount();
     int hiddenSingleCount = board->getHiddenSingleCount();
@@ -73,9 +75,5 @@ void QQwingWrapper::printStats(){
     cout << "Number of Guesses: " << guessCount  << endl;
     cout << "Number of Backtracks: " << backtrackCount  << endl;
     cout << "Difficulty: " << difficultyString  << endl;
-}
-
-void QQwingWrapper::destroy(){
-    delete board;
 }
 

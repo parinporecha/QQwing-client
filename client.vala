@@ -33,11 +33,6 @@ public void main() {
     // 4 corresponds to EXPERT difficulty
     int difficulty = 1;
 
-    var wrapper = new QQwingWrapper ();
-
     for (var i = 0; i < number_to_generate; i++)
-    {
-        wrapper.generatePuzzle (1);
-        wrapper.printStats ();
-    }
+        qqwing_wrapper_generate_puzzle (difficulty);
 }
