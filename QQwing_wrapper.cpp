@@ -55,8 +55,8 @@ void qqwing_print_stats(int *initPuzzle){
     SudokuBoard *board = new SudokuBoard();
     board->setRecordHistory(true);
     board->setLogHistory(false);
-    board->setPuzzle (initPuzzle);
-    board->solve ();
+    board->setPuzzle(initPuzzle);
+    board->solve();
 
     cout << "Number of Givens: " << board->getGivenCount()  << endl;
     cout << "Number of Singles: " << board->getSingleCount() << endl;
