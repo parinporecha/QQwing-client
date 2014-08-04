@@ -28,32 +28,38 @@
 
 using namespace qqwing;
 
-SudokuBoard *board;
-
-void qqwing_wrapper_generate_puzzle (int difficulty)
+const int* qqwing_generate_puzzle (int difficulty)
 {
-    board = new SudokuBoard();
+    bool havePuzzle = false;
+    int iterationsCount = 0;
+    const int *puzzle_array;
+    SudokuBoard *board = new SudokuBoard();
+
     board->setRecordHistory(true);
     board->setLogHistory(false);
     board->setPrintStyle(SudokuBoard::ONE_LINE);
-    bool havePuzzle = false;
-    bool done = false;
-    SudokuBoard::Symmetry symmetry = SudokuBoard::RANDOM;
 
-    while (!done)
+    while (iterationsCount < MAX_ITERATION_COUNT)
     {
-        havePuzzle = board->generatePuzzleSymmetry (symmetry);
-
+        havePuzzle = board->generatePuzzleSymmetry (SudokuBoard::RANDOM);
         board->solve ();
-        if (!havePuzzle || (SudokuBoard::Difficulty) difficulty != board->getDifficulty())
-            continue;
+        if (havePuzzle && (SudokuBoard::Difficulty) difficulty == board->getDifficulty())
+            break;
 
-        board->printPuzzle ();
-        done = true;
+        iterationsCount++;
     }
+
+    puzzle_array = board->getPuzzle();
+    return puzzle_array;
 }
 
-void qqwing_wrapper_print_stats(){
+void qqwing_print_stats(int *initPuzzle){
+    SudokuBoard *board = new SudokuBoard();
+    board->setRecordHistory(true);
+    board->setLogHistory(false);
+    board->setPuzzle (initPuzzle);
+    board->solve ();
+
     int givenCount = board->getGivenCount();
     int singleCount = board->getSingleCount();
     int hiddenSingleCount = board->getHiddenSingleCount();

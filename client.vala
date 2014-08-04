@@ -23,9 +23,9 @@
 
 
 public void main() {
-    stdout.printf ("Testing qqwing, generating 10 puzzles ...\n\n");
+    stdout.printf ("Testing qqwing, generating 4 puzzles of different difficulties ...\n\n");
 
-    int number_to_generate = 10;
+    int number_to_generate = 4;
 
     // 1 corresponds to SIMPLE difficulty
     // 2 corresponds to EASY difficulty
@@ -34,5 +34,14 @@ public void main() {
     int difficulty = 1;
 
     for (var i = 0; i < number_to_generate; i++)
-        qqwing_wrapper_generate_puzzle (difficulty);
+    {
+        int *arr = QQwing.generate_puzzle (difficulty++);
+
+        stdout.printf ("\n");
+        for (var j = 0; j < 81; j++)
+            stdout.printf ("%d", arr[j]);
+        stdout.printf ("\n");
+
+        QQwing.print_stats (arr);
+    }
 }
