@@ -30,22 +30,26 @@ using namespace qqwing;
 
 const int* qqwing_generate_puzzle (int difficulty)
 {
+    int i = 0;
     bool havePuzzle = false;
     const int *puzzle_array;
-    const int MAX_ITERATION_COUNT = 100;
+    const int MAX_ITERATION_COUNT = 200;
     SudokuBoard *board = new SudokuBoard();
 
     board->setRecordHistory(true);
     board->setLogHistory(false);
     board->setPrintStyle(SudokuBoard::ONE_LINE);
 
-    for (int i = 0; i < MAX_ITERATION_COUNT; i++)
+    for (i = 0; i < MAX_ITERATION_COUNT; i++)
     {
         havePuzzle = board->generatePuzzleSymmetry (SudokuBoard::RANDOM);
         board->solve ();
         if (havePuzzle && (SudokuBoard::Difficulty) difficulty == board->getDifficulty())
             break;
     }
+
+    if (i == MAX_ITERATION_COUNT)
+        g_warning ("Could not generate puzzle of specified difficulty");
 
     puzzle_array = board->getPuzzle();
     return puzzle_array;
