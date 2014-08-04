@@ -49,7 +49,8 @@ const int* qqwing_generate_puzzle(int difficulty)
 /*
  * Print the stats gathered while solving the puzzle given as input.
  */
-void qqwing_print_stats(int *initPuzzle){
+void qqwing_print_stats(int *initPuzzle)
+{
     SudokuBoard *board = new SudokuBoard();
     board->setRecordHistory(true);
     board->setLogHistory(false);
