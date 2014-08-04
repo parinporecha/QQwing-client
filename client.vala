@@ -35,13 +35,13 @@ public void main() {
 
     for (var i = 0; i < number_to_generate; i++)
     {
-        int *arr = QQwing.generate_puzzle (difficulty++);
+        int[] puzzle = QQwing.generate_puzzle (difficulty++);
 
         stdout.printf ("\n");
         for (var j = 0; j < 81; j++)
-            stdout.printf ("%d", arr[j]);
+            stdout.printf ("%d", puzzle[j]);
         stdout.printf ("\n");
 
-        QQwing.print_stats (arr);
+        QQwing.print_stats (puzzle);
     }
 }

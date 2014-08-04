@@ -31,22 +31,20 @@ using namespace qqwing;
 const int* qqwing_generate_puzzle (int difficulty)
 {
     bool havePuzzle = false;
-    int iterationsCount = 0;
     const int *puzzle_array;
+    const int MAX_ITERATION_COUNT = 100;
     SudokuBoard *board = new SudokuBoard();
 
     board->setRecordHistory(true);
     board->setLogHistory(false);
     board->setPrintStyle(SudokuBoard::ONE_LINE);
 
-    while (iterationsCount < MAX_ITERATION_COUNT)
+    for (int i = 0; i < MAX_ITERATION_COUNT; i++)
     {
         havePuzzle = board->generatePuzzleSymmetry (SudokuBoard::RANDOM);
         board->solve ();
         if (havePuzzle && (SudokuBoard::Difficulty) difficulty == board->getDifficulty())
             break;
-
-        iterationsCount++;
     }
 
     puzzle_array = board->getPuzzle();
@@ -60,26 +58,15 @@ void qqwing_print_stats(int *initPuzzle){
     board->setPuzzle (initPuzzle);
     board->solve ();
 
-    int givenCount = board->getGivenCount();
-    int singleCount = board->getSingleCount();
-    int hiddenSingleCount = board->getHiddenSingleCount();
-    int nakedPairCount = board->getNakedPairCount();
-    int hiddenPairCount = board->getHiddenPairCount();
-    int pointingPairTripleCount = board->getPointingPairTripleCount();
-    int boxReductionCount = board->getBoxLineReductionCount();
-    int guessCount = board->getGuessCount();
-    int backtrackCount = board->getBacktrackCount();
-    string difficultyString = board->getDifficultyAsString();
-
-    cout << "Number of Givens: " << givenCount  << endl;
-    cout << "Number of Singles: " << singleCount << endl;
-    cout << "Number of Hidden Singles: " << hiddenSingleCount  << endl;
-    cout << "Number of Naked Pairs: " << nakedPairCount  << endl;
-    cout << "Number of Hidden Pairs: " << hiddenPairCount  << endl;
-    cout << "Number of Pointing Pairs/Triples: " << pointingPairTripleCount  << endl;
-    cout << "Number of Box/Line Intersections: " << boxReductionCount  << endl;
-    cout << "Number of Guesses: " << guessCount  << endl;
-    cout << "Number of Backtracks: " << backtrackCount  << endl;
-    cout << "Difficulty: " << difficultyString  << endl;
+    cout << "Number of Givens: " << board->getGivenCount()  << endl;
+    cout << "Number of Singles: " << board->getSingleCount() << endl;
+    cout << "Number of Hidden Singles: " << board->getHiddenSingleCount()  << endl;
+    cout << "Number of Naked Pairs: " << board->getNakedPairCount()  << endl;
+    cout << "Number of Hidden Pairs: " << board->getHiddenPairCount()  << endl;
+    cout << "Number of Pointing Pairs/Triples: " << board->getPointingPairTripleCount()  << endl;
+    cout << "Number of Box/Line Intersections: " << board->getBoxLineReductionCount()  << endl;
+    cout << "Number of Guesses: " << board->getGuessCount()  << endl;
+    cout << "Number of Backtracks: " << board->getBacktrackCount()  << endl;
+    cout << "Difficulty: " << board->getDifficultyAsString()  << endl;
 }
 

@@ -2,7 +2,6 @@
 
 G_BEGIN_DECLS
 
-const int MAX_ITERATION_COUNT = 100;
 const int* qqwing_generate_puzzle (int difficulty);
 void qqwing_print_stats (int *initPuzzle);
 
