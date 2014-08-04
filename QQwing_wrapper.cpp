@@ -1,24 +1,12 @@
-/*
- * QQwing_client.cpp
+/* -*- Mode: CPP; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
- * Copyright 2014 Parin Porecha <parinporecha@gmail.com>
+ * Copyright © 2014 Parin Porecha
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301, USA.
- *
- *
+ * This program is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 2 of the License, or (at your option) any later
+ * version. See http://www.gnu.org/copyleft/gpl.html the full text of the
+ * license.
  */
 
 #include <iostream>
@@ -28,7 +16,10 @@
 
 using namespace qqwing;
 
-const int* qqwing_generate_puzzle (int difficulty)
+/*
+ * Generate a symmetric puzzle of specified difficulty.
+ */
+const int* qqwing_generate_puzzle(int difficulty)
 {
     int i = 0;
     bool havePuzzle = false;
@@ -42,8 +33,8 @@ const int* qqwing_generate_puzzle (int difficulty)
 
     for (i = 0; i < MAX_ITERATION_COUNT; i++)
     {
-        havePuzzle = board->generatePuzzleSymmetry (SudokuBoard::RANDOM);
-        board->solve ();
+        havePuzzle = board->generatePuzzleSymmetry(SudokuBoard::RANDOM);
+        board->solve();
         if (havePuzzle && (SudokuBoard::Difficulty) difficulty == board->getDifficulty())
             break;
     }
@@ -55,6 +46,9 @@ const int* qqwing_generate_puzzle (int difficulty)
     return puzzle_array;
 }
 
+/*
+ * Print the stats gathered while solving the puzzle given as input.
+ */
 void qqwing_print_stats(int *initPuzzle){
     SudokuBoard *board = new SudokuBoard();
     board->setRecordHistory(true);
